@@ -2,6 +2,7 @@ import {Composition} from 'remotion';
 import {HelloWorld, myCompSchema} from './HelloWorld';
 import {Logo, myCompSchema2} from './HelloWorld/Logo';
 import {MyComposition} from './MyComposition';
+import {SisakuComposition} from './Sisaku';
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -42,6 +43,7 @@ export const RemotionRoot: React.FC = () => {
 				}}
 			/>
 			<MyComposition />
+			<SisakuComposition />
 		</>
 	);
 };
