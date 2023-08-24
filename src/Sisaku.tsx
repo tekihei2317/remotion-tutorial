@@ -1,10 +1,15 @@
-import {Series} from 'remotion';
+import {Sequence} from 'remotion';
 import {Audio} from 'remotion';
 import {AbsoluteFill, Composition, Img, staticFile} from 'remotion';
 import {loadFont} from '@remotion/google-fonts/NotoSansJP';
 import {settings} from './contents/sisaku';
 import {audioMetaMap} from './contents/sisaku-audio-meta';
-import {createSectionFromSettings} from './core/contents';
+import {
+	createSectionFromSettings,
+	getSectionTotalDuration,
+	Section,
+} from './core/contents';
+import {useMemo} from 'react';
 
 const sections = createSectionFromSettings(settings, audioMetaMap);
 
@@ -35,43 +40,80 @@ const Jimaku = ({text}: {text: string}) => {
 	);
 };
 
+function createCumulativeSum(nums: number[], initialValue = 0): number[] {
+	const sum = new Array(nums.length + 1);
+	sum[0] = initialValue;
+	nums.forEach((num, index) => {
+		sum[index + 1] = sum[index] + num;
+	});
+
+	return sum;
+}
+
+const SectionSequences = ({
+	from,
+	section,
+}: {
+	from: number;
+	section: Section;
+}) => {
+	const talkStartFroms = useMemo(
+		() =>
+			createCumulativeSum(
+				section.talks.map((talk) => talk.duration),
+				from + (section.sectionStart ? section.sectionStart.duration : 0)
+			),
+		[from, section]
+	);
+
+	return (
+		<>
+			{section.sectionStart && (
+				<Sequence durationInFrames={section.sectionStart.duration} from={from}>
+					<section.sectionStart.component />
+				</Sequence>
+			)}
+			{section.talks.map((talk, index) => (
+				<Sequence
+					key={talk.audioId}
+					from={talkStartFroms[index]}
+					durationInFrames={talk.duration}
+				>
+					<AbsoluteFill>
+						<Img src={staticFile('assets/background.png')} />
+						<Img
+							src={staticFile('assets/zunda0000.png')}
+							style={{
+								position: 'absolute',
+								height: '800px',
+								bottom: 0,
+								right: 0,
+							}}
+						/>
+						<Jimaku text={talk.text} />
+						<Audio src={staticFile(`audio/${talk.audioId}.wav`)} />
+					</AbsoluteFill>
+				</Sequence>
+			))}
+		</>
+	);
+};
+
+const sectionStartFrom = createCumulativeSum(
+	sections.map((section) => getSectionTotalDuration(section))
+);
+
 const Sisaku = () => {
 	return (
 		<>
 			<Audio src={staticFile('Pop_Drop.mp3')} volume={0.07} />
 			<>
 				{sections.map((section, index) => (
-					<Series key={index}>
-						{section.sectionStart && (
-							<Series.Sequence
-								key={`sectionStart.${index}`}
-								durationInFrames={60}
-							>
-								<section.sectionStart.component />
-							</Series.Sequence>
-						)}
-						{section.talks.map((talk) => (
-							<Series.Sequence
-								key={talk.audioId}
-								durationInFrames={talk.duration}
-							>
-								<AbsoluteFill>
-									<Img src={staticFile('assets/background.png')} />
-									<Img
-										src={staticFile('assets/zunda0000.png')}
-										style={{
-											position: 'absolute',
-											height: '800px',
-											bottom: 0,
-											right: 0,
-										}}
-									/>
-									<Jimaku text={talk.text} />
-									<Audio src={staticFile(`audio/${talk.audioId}.wav`)} />
-								</AbsoluteFill>
-							</Series.Sequence>
-						))}
-					</Series>
+					<SectionSequences
+						key={index}
+						from={sectionStartFrom[index]}
+						section={section}
+					/>
 				))}
 			</>
 		</>

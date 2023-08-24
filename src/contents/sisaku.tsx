@@ -1,3 +1,4 @@
+import {AbsoluteFill} from 'remotion';
 import {VideoSettings} from '../core/contents';
 
 export const settings: VideoSettings = [
@@ -30,15 +31,15 @@ export const settings: VideoSettings = [
 		],
 	},
 	{
-		// SectionStart: {
-		// 	component: (
-		// 		<AbsoluteFill style={{backgroundColor: 'white'}}>
-		// 			<p style={{textAlign: 'center', fontSize: 70}}>問題1</p>
-		// 			<p style={{textAlign: 'center', fontSize: 70}}>点数差分</p>
-		// 		</AbsoluteFill>
-		// 	),
-		// 	duration: 60,
-		// },
+		sectionStart: {
+			component: () => (
+				<AbsoluteFill style={{backgroundColor: 'white'}}>
+					<p style={{textAlign: 'center', fontSize: 70}}>問題1</p>
+					<p style={{textAlign: 'center', fontSize: 70}}>点数差分</p>
+				</AbsoluteFill>
+			),
+			duration: 60,
+		},
 		talks: [],
 	},
 ];

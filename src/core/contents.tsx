@@ -60,3 +60,12 @@ export function createSectionFromSettings(
 		return {...section, talks};
 	});
 }
+
+export function getSectionTotalDuration(section: Section): number {
+	return (
+		(section.sectionStart?.duration ?? 0) +
+		section.talks
+			.map((talk) => talk.duration)
+			.reduce((sum, duration) => sum + duration, 0)
+	);
+}
