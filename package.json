@@ -7,7 +7,8 @@
 		"build": "remotion render HelloWorld out/video.mp4",
 		"upgrade": "remotion upgrade",
 		"test": "eslint src --ext ts,tsx,js,jsx && tsc",
-		"generate-content": "tsx scripts/generate-content.ts"
+		"generate-content": "tsx scripts/generate-content.ts",
+		"add-preset": "tsx scripts/add-preset.ts"
 	},
 	"repository": {},
 	"license": "UNLICENSED",
@@ -16,6 +17,7 @@
 		"@remotion/google-fonts": "^4.0.22",
 		"@remotion/zod-types": "4.0.21",
 		"axios": "^1.4.0",
+		"get-audio-duration": "^4.0.1",
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0",
 		"remotion": "4.0.21",

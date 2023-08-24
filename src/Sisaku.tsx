@@ -1,16 +1,8 @@
-// 試作する
-// やりたいこと
-// - 背景の表示
-// - 立ち絵の表示
-// - 字幕の表示
-// - BGMの再生
-
 import {Series} from 'remotion';
 import {Audio} from 'remotion';
 import {AbsoluteFill, Composition, Img, staticFile} from 'remotion';
 import {loadFont} from '@remotion/google-fonts/NotoSansJP';
 import {talks} from './contents/_sisaku';
-import {AUDIO_DIR} from './utils/talk';
 
 const {fontFamily} = loadFont();
 

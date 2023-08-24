@@ -1,7 +1,7 @@
 import axios from 'axios';
 import fs from 'node:fs/promises';
 
-const voicevoxClient = axios.create({
+export const voicevoxClient = axios.create({
 	baseURL: 'http://127.0.0.1:50021',
 });
 
@@ -10,7 +10,7 @@ export async function generateAudio(
 	audioPath: string
 ): Promise<void> {
 	const queryRes = await voicevoxClient.post(
-		`/audio_query?speaker=1&text=${text}`
+		`/audio_query_from_preset?text=${text}&preset_id=2`
 	);
 
 	const synthesisRes = await voicevoxClient.post(

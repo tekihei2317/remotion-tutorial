@@ -1,3 +1,4 @@
+import getAudioDurationInSeconds from 'get-audio-duration';
 import crypto from 'node:crypto';
 import path from 'node:path';
 import {generateAudio} from './voicevox';
@@ -19,8 +20,11 @@ type TalkWithAudio = {
 	audioId: string;
 };
 
-async function getAudioDuration(talk: {text: string}): Promise<number> {
-	return talk.text.length * 3;
+const FPS = 30;
+
+async function getAudioDuration(audioPath: string): Promise<number> {
+	const seconds = await getAudioDurationInSeconds(audioPath);
+	return Math.floor(seconds * FPS);
 }
 
 export async function generateContent(
@@ -31,9 +35,15 @@ export async function generateContent(
 		talks.map((talk) => createAudio(talk.text))
 	);
 	console.log('[END] 音声を生成しました');
+	// Const audioIdList: string[] = [];
+	// for (const talk of talks) {
+	// 	audioIdList.push(await createAudio(talk.text));
+	// }
 
 	const durations = await Promise.all(
-		talks.map((talk) => getAudioDuration(talk))
+		audioIdList.map((audioId) =>
+			getAudioDuration(`${AUDIO_DIR}/${audioId}.wav`)
+		)
 	);
 
 	return talks.map((talk, index) => ({
