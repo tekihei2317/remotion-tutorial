@@ -7,7 +7,8 @@
 		"build": "remotion render HelloWorld out/video.mp4",
 		"upgrade": "remotion upgrade",
 		"test": "eslint src --ext ts,tsx,js,jsx && tsc",
-		"generate-content": "tsx scripts/generate-content.ts",
+		"audio-generate": "tsx scripts/generate-audio-meta.ts",
+		"audio-clean": "find public/audio -type f ! -name '.gitkeep' -exec rm {} \\;",
 		"add-preset": "tsx scripts/add-preset.ts"
 	},
 	"repository": {},

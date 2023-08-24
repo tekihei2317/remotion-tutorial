@@ -1,4 +1,4 @@
-import {voicevoxClient} from '../src/utils/voicevox';
+import {voicevoxClient} from './utils/voicevox';
 
 type Preset = {
 	id: number;
