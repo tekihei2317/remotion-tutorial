@@ -75,8 +75,15 @@ export const settings: VideoSettings = [
 				image: {src: 'sisaku/p1-sample-output.png'},
 			},
 			{
-				text: '問題が理解できたので、SQLを書いてみます',
-				image: {src: 'sisaku/p1-answer1.png'},
+				text: '問題が理解できたので、SQLを書いていきます',
+			},
+			{
+				text: '問題ページにコードエディタがあるので、それを使います',
+				image: {src: 'sisaku/p1-codetest.png'},
+			},
+			{
+				text: 'コードテストを実行して動作確認もできます',
+				image: {src: 'sisaku/p1-codetest.png'},
 			},
 			{
 				text: 'ここでは、SQLは基本的に小文字で書いています',
@@ -87,10 +94,11 @@ export const settings: VideoSettings = [
 				image: {src: 'sisaku/p1-answer1.png'},
 			},
 			{
-				text: '実行して結果を確認してみましょう',
+				image: {src: 'sisaku/p1-answer1.png'},
+				text: 'SQLが書けたらコードテストを実行して、結果を確認してみましょう',
 			},
 			{
-				text: '合っていそうですね。最後に、表示順に合わせて並び替えます。',
+				text: '表示内容は合っていそうですね。最後に、表示順に合わせて並び替えます。',
 				image: {src: 'sisaku/p1-answer1-output.png'},
 			},
 			{
@@ -105,8 +113,51 @@ export const settings: VideoSettings = [
 				image: {src: 'sisaku/p1-answer2.png'},
 			},
 			{
-				text: '提出すると、正解をもらうことができました',
+				text: '提出すると、正解をもらうことができました  やったー',
 				image: {src: 'sisaku/p1-submission.png'},
+			},
+		],
+	},
+	{
+		sectionStart: {
+			component: () => (
+				<AbsoluteFill style={{backgroundColor: slate900}}>
+					<p style={{textAlign: 'center', fontSize: 70, color: 'white'}}>
+						問題2
+					</p>
+					<p style={{textAlign: 'center', fontSize: 100, color: 'white'}}>
+						受注件数
+					</p>
+				</AbsoluteFill>
+			),
+			duration: 75,
+		},
+		talks: [
+			{
+				text: '次の問題に進みます',
+			},
+			{
+				text: '受注テーブルより、受注日が、2023年7月1日から2023年7月31日の1ヵ月間で受注した顧客毎の受注件数を表示しなさい。ただし、同一日の受注は1件とカウントする。',
+				image: {src: 'sisaku/p2-er.png'},
+			},
+			{
+				text: 'サンプル出力はこちらです',
+				image: {src: 'sisaku/p2-sample-output.png'},
+			},
+			{
+				text: '同一日の受注を一件とカウントするという条件がなければ、受注テーブルと顧客テーブルをJOINして、顧客コードで集約すれば解けます',
+				image: {src: 'sisaku/p2-sample-output.png'},
+			},
+			{
+				text: 'なので、まずは同一日の受注をまとめることから始めましょう',
+			},
+			{
+				text: '同一日の受注をまとめるには、SELECT DISTINCTで重複を除外するのが簡単です',
+				image: {src: 'sisaku/p2-select-distinct.png'},
+			},
+			{
+				text: 'あとは、このテーブルと顧客テーブルをJOINして、件数と名前を取得すれば完成です。',
+				image: {src: 'sisaku/p2-answer.png'},
 			},
 		],
 	},

@@ -41,3 +41,4 @@ npm run upgrade
 ## Docs
 
 Get started with Remotion by reading the [fundamentals page](https://www.remotion.dev/docs/the-fundamentals).
+![Alt text](image.png)
