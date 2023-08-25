@@ -8,11 +8,14 @@ import {AudioMeta, AudioMetaMap, VideoSettings} from '../src/core/contents';
 
 export const AUDIO_DIR = path.resolve(__dirname, '../public/audio');
 
+function calculateHash(input: string): string {
+	const hash = crypto.createHash('md5');
+	return hash.update(input).digest('hex');
+}
+
 async function createAudio(text: string): Promise<string> {
-	const id = crypto.randomUUID();
-	console.log(`[START] "${text}"の音声を生成しています`);
+	const id = calculateHash(text);
 	await generateAudio(text, path.join(AUDIO_DIR, `${id}.wav`));
-	console.log(`[END] "${text}"の音声を生成しました`);
 
 	return id;
 }
@@ -28,12 +31,13 @@ export async function generateAudioMeta(
 ): Promise<AudioMetaMap> {
 	const audioMeta: AudioMetaMap = [];
 
-	for (const section of settings) {
-		console.log('[START] 音声を生成しています');
+	for (let i = 0; i < settings.length; i++) {
+		const section = settings[i];
+		console.log(`[LOG] セクション${i}の音声を生成しています`);
 		const audioIdList = await Promise.all(
 			section.talks.map((talk) => createAudio(talk.text))
 		);
-		console.log('[END] 音声を生成しました');
+		console.log(`[LOG] セクション${i}音声を生成しました`);
 
 		const durations = await Promise.all(
 			audioIdList.map((audioId) => {

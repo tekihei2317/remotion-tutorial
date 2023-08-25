@@ -40,6 +40,21 @@ const Jimaku = ({text}: {text: string}) => {
 	);
 };
 
+const SUBTITLE_HEIGHT_PX = 300;
+const VERTICAL_PADDING_PX = 40;
+const HORIZONTAL_PADDING_PX = 320;
+
+const imagePosition: React.CSSProperties = {
+	position: 'absolute',
+	height: `calc(100% - ${SUBTITLE_HEIGHT_PX}px - ${VERTICAL_PADDING_PX * 2}px)`,
+	top: VERTICAL_PADDING_PX,
+	left: HORIZONTAL_PADDING_PX,
+	width: `calc(100% - ${HORIZONTAL_PADDING_PX * 2}px)`,
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+};
+
 function createCumulativeSum(nums: number[], initialValue = 0): number[] {
 	const sum = new Array(nums.length + 1);
 	sum[0] = initialValue;
@@ -90,6 +105,14 @@ const SectionSequences = ({
 								right: 0,
 							}}
 						/>
+						{talk.image && (
+							<div style={imagePosition}>
+								<Img
+									src={staticFile(talk.image.src)}
+									style={{objectFit: 'contain', width: '100%', height: '100%'}}
+								/>
+							</div>
+						)}
 						<Jimaku text={talk.text} />
 						<Audio src={staticFile(`audio/${talk.audioId}.wav`)} />
 					</AbsoluteFill>
